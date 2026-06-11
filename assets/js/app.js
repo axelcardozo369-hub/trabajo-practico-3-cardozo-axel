@@ -8,7 +8,7 @@ const obternerMisPersonajes = async () => {
     const respuesta = await fetch(URLPersonajes);
     const datos = await respuesta.json();
     personajes = datos.results;
-    console.log(personajes);
+    console.log( "Si ves esto, mi codigo funciona ",personajes);
   } catch (error) {
     console.log("hay errores axel" + error);
   }
