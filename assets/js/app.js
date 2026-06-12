@@ -37,7 +37,6 @@ const obternerMisPersonajes = async () => {
     </div>
       `;
 
-     
       miContenedor.appendChild(columna);
     });
     console.log(personajes);
@@ -45,22 +44,40 @@ const obternerMisPersonajes = async () => {
     console.log("hay errores axel" + error);
   }
 };
- btnFiltrar.addEventListener("click", function() {
+btnFiltrar.addEventListener("click", function () {
   const texto = inputFiltro.value.trim().toLowerCase();
   if (texto === "") {
     alert("Escribí un nombre para buscar");
     return;
   }
-  const filtrados = personajes.filter(function(personaje) {
+  const filtrados = personajes.filter(function (personaje) {
     return personaje.name.toLowerCase().includes(texto);
   });
   if (filtrados.length === 0) {
-    miContenedor.innerHTML = "<p class='text-danger'>No se encontraron personajes</p>";
+    miContenedor.innerHTML =
+      "<p class='text-danger'>No se encontraron personajes</p>";
     return;
   }
+
+   
   miContenedor.innerHTML = "";
-  filtrados.forEach(function(personaje) {
-    miContenedor.innerHTML += `<p>${personaje.name}</p>`;
+  filtrados.forEach(function (personaje) {
+    let colorStatus = "";
+      if (personaje.status === "Alive") {
+        colorStatus = "text-success fw-bold";
+      } else if (personaje.status === "Deceased") {
+        colorStatus = "text-danger fw-bold";
+      }
+    miContenedor.innerHTML += `<div class="card">
+      <img src = "${URlImagenes}${personaje.portrait_path}" class = "card-img-top" alt="${personaje.name}">
+        <div class="card-body">
+            <h5 class="card-title">${personaje.name}</h5>
+            <p class = "card-text"> ${personaje.occupation}</p>
+            <p class = "card-text ${colorStatus}">${personaje.status}</p>
+            <button class = "btn btn-warning mt-2 btn-detalle" data-id = "${personaje.id}"> Ver detalle del Personaje </button>
+        </div>
+    </div>
+    `;
   });
 });
 // funcion cargar personajes
