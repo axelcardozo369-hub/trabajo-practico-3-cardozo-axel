@@ -15,6 +15,12 @@ const obternerMisPersonajes = async () => {
     personajes = datos.results;
     personajes.forEach(function (personaje) {
       const columna = document.createElement("div");
+      let colorStatus = "";
+      if (personaje.status === "Alive") {
+        colorStatus = "text-success fw-bold";
+      } else if (personaje.status === "Deceased") {
+        colorStatus = "text-danger fw-bold";
+      }
       columna.className = "col-md-4";
       columna.innerHTML = `
       <div class="card">
@@ -22,7 +28,7 @@ const obternerMisPersonajes = async () => {
         <div class="card-body">
             <h5 class="card-title">${personaje.name}</h5>
             <p class = "card-text"> ${personaje.occupation}</p>
-            <p class = "card-text">${personaje.status}</p>
+            <p class = "card-text ${colorStatus}">${personaje.status}</p>
         </div>
     </div>
       `;
