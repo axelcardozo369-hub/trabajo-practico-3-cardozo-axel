@@ -9,7 +9,7 @@ console.log(miContenedor);
 const contenedor = document.querySelector("#coleccionPersonajes");
 const inputFiltro = document.querySelector("#inputFiltro");
 const btnFiltrar = document.querySelector("#btnfiltrar");
-const modalPersonajes = document.querySelector("#modalPersonajes");
+const modalPersonajes = new bootstrap.Modal("#modalPersonajes");
 
 const obternerMisPersonajes = async () => {
   try {
@@ -27,7 +27,7 @@ const obternerMisPersonajes = async () => {
       columna.className = "col-md-4";
       columna.innerHTML = `
       <div class="card">
-      <img src = "${URlImagenes}${personaje.portrait_path}" class = "card-img-top" alt="${personaje.name}">
+      <img src = "${URlImagenes}${personaje.portrait_path}" class = "card-img-top"  style = "heigth:100px; width: 200px" alt="${personaje.name}">
         <div class="card-body">
             <h5 class="card-title">${personaje.name}</h5>
             <p class = "card-text"> ${personaje.occupation}</p>
@@ -44,6 +44,12 @@ const obternerMisPersonajes = async () => {
     console.log("hay errores axel" + error);
   }
 };
+miContenedor.addEventListener("click", async (e) => {
+  if (e.target.classList.contains("btn-detalle")) {
+    modalPersonajes.show();
+  }
+});
+
 btnFiltrar.addEventListener("click", function () {
   const texto = inputFiltro.value.trim().toLowerCase();
   if (texto === "") {
@@ -59,17 +65,16 @@ btnFiltrar.addEventListener("click", function () {
     return;
   }
 
-   
   miContenedor.innerHTML = "";
   filtrados.forEach(function (personaje) {
     let colorStatus = "";
-      if (personaje.status === "Alive") {
-        colorStatus = "text-success fw-bold";
-      } else if (personaje.status === "Deceased") {
-        colorStatus = "text-danger fw-bold";
-      }
+    if (personaje.status === "Alive") {
+      colorStatus = "text-success fw-bold";
+    } else if (personaje.status === "Deceased") {
+      colorStatus = "text-danger fw-bold";
+    }
     miContenedor.innerHTML += `<div class="card">
-      <img src = "${URlImagenes}${personaje.portrait_path}" class = "card-img-top" alt="${personaje.name}">
+      <img src = "${URlImagenes}${personaje.portrait_path}" class = "card-img-top" style = "heigth:100px; width: 200px" alt="${personaje.name}">
         <div class="card-body">
             <h5 class="card-title">${personaje.name}</h5>
             <p class = "card-text"> ${personaje.occupation}</p>
@@ -80,6 +85,7 @@ btnFiltrar.addEventListener("click", function () {
     `;
   });
 });
+
 // funcion cargar personajes
 
 document.addEventListener("DOMContentLoaded", obternerMisPersonajes);
