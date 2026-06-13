@@ -10,6 +10,7 @@ const contenedor = document.querySelector("#coleccionPersonajes");
 const inputFiltro = document.querySelector("#inputFiltro");
 const btnFiltrar = document.querySelector("#btnfiltrar");
 const modalPersonajes = new bootstrap.Modal("#modalPersonajes");
+const modalBody = document.querySelector("#modal-body");
 
 const obternerMisPersonajes = async () => {
   try {
@@ -48,8 +49,18 @@ miContenedor.addEventListener("click", async (e) => {
   if (e.target.classList.contains("btn-detalle")) {
     const id = e.target.getAttribute("data-id");
     console.log("id del personaje:", id);
-    const respuesta =await fetch(URLDetalles + id);
+    const respuesta = await fetch(URLDetalles + id);
     const detalle = await respuesta.json();
+    modalBody.innerHTML = `
+    <img src = "${URlImagenes}${detalle.portrait_path}"class = "img-fluid" alt = "${detalle.name}">
+    <h3>${detalle.name}</h3>
+    <p><i class = "bi bi-calendar"></i> <strong> Edad:</strong> ${detalle.age || "sin datos"}</p>
+    <p><i class = "bi bi-cake"></i><strong> Nacimiento:</strong>${detalle.birthdate || "sin datos"}</p>
+    <p><i class="bi bi-gender-ambiguous"></i> <strong>Género:</strong> ${detalle.gender || "sin datos"}</p>
+     <p><i class="bi bi-briefcase"></i> <strong>Ocupación:</strong> ${detalle.occupation || "sin datos"}</p>
+     <p><i class="bi bi-heart"></i> <strong>Estado:</strong> ${detalle.status || "sin datos"}</p>
+     <p><i class="bi bi-chat-quote"></i> <strong>Frase:</strong> ${detalle.phrases ? detalle.phrases[0] : "sin frase"}</p
+    `;
     modalPersonajes.show();
   }
 });
