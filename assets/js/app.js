@@ -46,6 +46,10 @@ const obternerMisPersonajes = async () => {
 };
 miContenedor.addEventListener("click", async (e) => {
   if (e.target.classList.contains("btn-detalle")) {
+    const id = e.target.getAttribute("data-id");
+    console.log("id del personaje:", id);
+    const respuesta =await fetch(URLDetalles + id);
+    const detalle = await respuesta.json();
     modalPersonajes.show();
   }
 });
