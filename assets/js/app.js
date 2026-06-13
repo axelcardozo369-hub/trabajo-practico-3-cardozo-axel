@@ -61,6 +61,7 @@ miContenedor.addEventListener("click", async (e) => {
      <p><i class="bi bi-heart"></i> <strong>Estado:</strong> ${detalle.status || "sin datos"}</p>
      <p><i class="bi bi-chat-quote"></i> <strong>Frase:</strong> ${detalle.phrases ? detalle.phrases[0] : "sin frase"}</p
     `;
+    document.querySelector("#exampleModalLabel").textContent = detalle.name;
     modalPersonajes.show();
   }
 });
